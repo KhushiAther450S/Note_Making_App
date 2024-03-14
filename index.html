@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  font-family: "Lato", sans-serif;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+.container{
+  display: flex;
+}
+.view-mode{
+  background-color: #f4e3e3;
+  width: 20%;
+  height: 48vh;
+  border-radius: 2rem;
+  box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  font-size: 12px;
+  text-align: left;
+  margin-left: 100px;
+} 
+h1{
+  padding-top: 12px;
+  padding-left: 20px;
+}
+p{
+  padding-left: 20px;
+}
+.edit-button{
+  margin-left: 200px;
+  position: fixed;
+}
+.modal{
+  display:none;
+  position: fixed;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  padding: 20px;
+  background-color: white;
+  
+  z-index:1;
+  width:400px;
+  height:300px;
+  border-radius: 2rem;
+  box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+.modal input{
+  width:100%;
+  margin-bottom: 10px;
+}
+.modal-button{
+  cursor: pointer;
+  color:blue;
+  border-radius: 4px;
+  margin-left: 350px ;
+  border: none;
+  background: none;
+}
+</style>
+</head>
+<body>
+
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="#">Home</a>
+  <a href="create.html">Create Note</a>
+  <a href="#">About</a>
+  <a href="#">Contact</a>
+</div>
+
+
+
+<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; </span>
+<div id="container1" class="container">
+<div class="view-mode">
+  <div>
+    <h1>Title1</h1>
+  </div>
+  <span>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi convallis ipsum vitae ex dapibus, a ultricies quam faucibus. Aliquam mattis posuere lacus dignissim suscipit. Mauris fermentum et sapien ac sodales. Proin convallis non metus a blandit. Mauris sit amet purus dignissim, volutpat leo non, placerat tellus. Maecenas suscipit sagittis sapien vitae ullamcorper. Donec auctor tortor ante, eu porta eros pulvinar non. Mauris blandit lorem at est auctor, vitae consectetur urna ultricies. Fusce a augue enim. Praesent odio justo, rutrum pretium congue non, ultrices vitae augue.</p>
+  </span>
+  <div>
+    <p>Red</p>
+  </div>
+  <div class="edit-button">
+    <button onclick="toggleModal()">Edit</button>
+    
+  </div>
+</div>
+<!-- <div id="editModal1" class="modal">
+  <div><h1><input type="text" placeholder="Enter title"></h1></div>
+  <span><p><input type="text" placeholder="Enter the description"></p></span>
+  <div><p><input type="text" placeholder="Enter color"></p></div>
+  <button class="modal-button" onclick="submitEdit()">Submit</button>
+</div> -->
+<div class="view-mode">
+  <div>
+    <h1 id="title2">Title2</h1>
+  </div>
+  <span>
+    <p id="description2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi convallis ipsum vitae ex dapibus, a ultricies quam faucibus. Aliquam mattis posuere lacus dignissim suscipit. Mauris fermentum et sapien ac sodales. Proin convallis non metus a blandit. Mauris sit amet purus dignissim, volutpat leo non, placerat tellus. Maecenas suscipit sagittis sapien vitae ullamcorper. Donec auctor tortor ante, eu porta eros pulvinar non. Mauris blandit lorem at est auctor, vitae consectetur urna ultricies. Fusce a augue enim. Praesent odio justo, rutrum pretium congue non, ultrices vitae augue.</p>
+  </span>
+  <div>
+    <p id="color2">Red</p>
+  </div>
+  <div class="edit-button">
+    <button onclick="toggleModal()">Edit</button>
+    
+  </div>
+</div>
+<!-- <div id="editModal2" class="modal">
+  <div><h1><input type="text" placeholder="Enter title"></h1></div>
+  <span><p><input type="text" placeholder="Enter the description"></p></span>
+  <div><p><input type="text" placeholder="Enter color"></p></div>
+  <button class="modal-button" onclick="submitEdit()">Submit</button>
+</div> -->
+<div class="view-mode">
+  <div>
+    <h1 id="title3">Title3</h1>
+  </div>
+  <span>
+    <p id="description3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi convallis ipsum vitae ex dapibus, a ultricies quam faucibus. Aliquam mattis posuere lacus dignissim suscipit. Mauris fermentum et sapien ac sodales. Proin convallis non metus a blandit. Mauris sit amet purus dignissim, volutpat leo non, placerat tellus. Maecenas suscipit sagittis sapien vitae ullamcorper. Donec auctor tortor ante, eu porta eros pulvinar non. Mauris blandit lorem at est auctor, vitae consectetur urna ultricies. Fusce a augue enim. Praesent odio justo, rutrum pretium congue non, ultrices vitae augue.</p>
+  </span>
+  <div>
+    <p id="color3">Red</p>
+  </div>
+  <div class="edit-button">
+    <button onclick="toggleModal()">Edit</button>
+    
+  </div>
+</div>
+<div id="editModal" class="modal" >
+  <div><h1><input id="titleInput" type="text" placeholder="Enter title"></h1></div>
+  <span><p><input id="descriptionInput" type="text" placeholder="Enter the description"></p></span>
+  <div><p><input id="colorInput" type="text" placeholder="Enter color"></p></div>
+  <button class="modal-button" onclick="submitEdit()">Submit</button>
+  
+</div>
+</div>
+
+<script>
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+}
+function toggleModal()
+{
+  const modal=document.getElementById("editModal");
+  modal.style.display=modal.style.display === "block" ? "none" : "block";
+}
+function submitEdit()
+{
+  const titleInput=document.getElementById('titleInput').value;
+  const descriptionInput=document.getElementById('descriptionInput').value;
+  const colorInput=document.getElementById('colorInput').value;
+
+  console.log(titleInput);
+   
+  document.getElementById('title3').textContent=titleInput;
+  document.getElementById('description3').textContent=descriptionInput;
+  document.getElementById('color3').textContent=colorInput;
+  // const modal1=document.getElementById("editModal1");
+  // const modal2=document.getElementById("editModal2");
+  // const modal3=document.getElementById("editModal3");
+  /*console.log(modal1);
+  modal1.style.display=modal1.style.display = "none"
+  modal2.style.display=modal2.style.display  = "none";
+  modal3.style.display=modal3.style.display = "none";*/
+
+}
+</script>
+   
+</body>
+</html> 
