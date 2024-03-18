@@ -1,5 +1,3 @@
-
- 
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,58 +45,9 @@ body {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
-.container{
-  display: flex;
-}
-.view-mode{
-  background-color: #f4e3e3;
-  width: 20%;
-  height: 48vh;
-  border-radius: 2rem;
-  box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  font-size: 12px;
-  text-align: left;
-  margin-left: 100px;
-} 
-h1{
-  padding-top: 12px;
-  padding-left: 20px;
-}
-p{
-  padding-left: 20px;
-}
-.edit-button{
-  margin-left: 200px;
-  position: fixed;
-}
-.modal{
-  display:none;
-  position: fixed;
-  top:50%;
-  left:50%;
-  transform: translate(-50%,-50%);
-  padding: 20px;
-  background-color: white;
-  
-  z-index:1;
-  width:400px;
-  height:300px;
-  border-radius: 2rem;
-  box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
-}
-.modal input{
-  width:100%;
-  margin-bottom: 10px;
-}
-.modal-button{
-  cursor: pointer;
-  color:blue;
-  border-radius: 4px;
-  margin-left: 350px ;
-  border: none;
-  background: none;
-}
+
+
 #Addnote{
   cursor: pointer;
 }
@@ -150,14 +99,14 @@ textarea {
 ul {
     list-style-type: none;
     padding: 0;
-    margin: 0;
+    margin-left: 50px;
     display: flex;
     flex-wrap: wrap;
     text-align: center;
 }
 
 li {
-    background-color: #fff385;
+    background-color: #cd97c5;
     margin: 5px 0;
     padding: 20px;
     border-radius: 8px; /* Rounded corners */
@@ -178,6 +127,7 @@ li span {
     flex-grow: 1;
     word-wrap: break-word;
     overflow-y: scroll;
+    padding:20px;
 }
 
 #editBtn,
@@ -194,7 +144,7 @@ li span {
 }
 
 #editBtn {
-    background-color: gainsboro;
+    background-color: #8c53ff;
 }
 
 #deleteBtn:hover {
@@ -204,6 +154,25 @@ li span {
 #editBtn:hover {
     background-color: gray;
 }
+#editing-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 300px;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
 </style>
 </head>
 <body>
@@ -223,72 +192,9 @@ li span {
 <div id="list-container">
   <ul id="notes-list"></ul>
 </div>
-<!-- <div id="container1" class="container">
-<div class="view-mode">
-  <div>
-    <h1>Title1</h1>
-  </div>
-  <span>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi convallis ipsum vitae ex dapibus, a ultricies quam faucibus. Aliquam mattis posuere lacus dignissim suscipit. Mauris fermentum et sapien ac sodales. Proin convallis non metus a blandit. Mauris sit amet purus dignissim, volutpat leo non, placerat tellus. Maecenas suscipit sagittis sapien vitae ullamcorper. Donec auctor tortor ante, eu porta eros pulvinar non. Mauris blandit lorem at est auctor, vitae consectetur urna ultricies. Fusce a augue enim. Praesent odio justo, rutrum pretium congue non, ultrices vitae augue.</p>
-  </span>
-  <div>
-    <p>Red</p>
-  </div>
-  <div class="edit-button">
-    <button onclick="toggleModal()">Edit</button>
-    
-  </div>
-</div>
-<!-- <div id="editModal1" class="modal">
-  <div><h1><input type="text" placeholder="Enter title"></h1></div>
-  <span><p><input type="text" placeholder="Enter the description"></p></span>
-  <div><p><input type="text" placeholder="Enter color"></p></div>
-  <button class="modal-button" onclick="submitEdit()">Submit</button>
-</div> -->
-<!-- <div class="view-mode">
-  <div>
-    <h1 id="title2">Title2</h1>
-  </div>
-  <span>
-    <p id="description2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi convallis ipsum vitae ex dapibus, a ultricies quam faucibus. Aliquam mattis posuere lacus dignissim suscipit. Mauris fermentum et sapien ac sodales. Proin convallis non metus a blandit. Mauris sit amet purus dignissim, volutpat leo non, placerat tellus. Maecenas suscipit sagittis sapien vitae ullamcorper. Donec auctor tortor ante, eu porta eros pulvinar non. Mauris blandit lorem at est auctor, vitae consectetur urna ultricies. Fusce a augue enim. Praesent odio justo, rutrum pretium congue non, ultrices vitae augue.</p>
-  </span>
-  <div>
-    <p id="color2">Red</p>
-  </div>
-  <div class="edit-button">
-    <button onclick="toggleModal()">Edit</button>
-    
-  </div>
-</div> -->
-<!-- <div id="editModal2" class="modal">
-  <div><h1><input type="text" placeholder="Enter title"></h1></div>
-  <span><p><input type="text" placeholder="Enter the description"></p></span>
-  <div><p><input type="text" placeholder="Enter color"></p></div>
-  <button class="modal-button" onclick="submitEdit()">Submit</button>
-</div> -->
-<!-- <div class="view-mode">
-  <div>
-    <h1 id="title3">Title3</h1>
-  </div>
-  <span>
-    <p id="description3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi convallis ipsum vitae ex dapibus, a ultricies quam faucibus. Aliquam mattis posuere lacus dignissim suscipit. Mauris fermentum et sapien ac sodales. Proin convallis non metus a blandit. Mauris sit amet purus dignissim, volutpat leo non, placerat tellus. Maecenas suscipit sagittis sapien vitae ullamcorper. Donec auctor tortor ante, eu porta eros pulvinar non. Mauris blandit lorem at est auctor, vitae consectetur urna ultricies. Fusce a augue enim. Praesent odio justo, rutrum pretium congue non, ultrices vitae augue.</p>
-  </span>
-  <div>
-    <p id="color3">Red</p>
-  </div>
-  <div class="edit-button">
-    <button onclick="toggleModal()">Edit</button>
-    
-  </div>
-</div>
-<div id="editModal" class="modal" >
-  <div><h1><input id="titleInput" type="text" placeholder="Enter title"></h1></div>
-  <span><p><input id="descriptionInput" type="text" placeholder="Enter the description"></p></span>
-  <div><p><input id="colorInput" type="text" placeholder="Enter color"></p></div>
-  <button class="modal-button" onclick="submitEdit()">Submit</button>
+
+
   
-</div>
-</div> --> 
 
 <script>
 function openNav() {
@@ -298,31 +204,8 @@ function openNav() {
 function closeNav() {
   document.getElementById("mySidenav").style.width = "0";
 }
-// function toggleModal()
-// {
-//   const modal=document.getElementById("editModal");
-//   modal.style.display=modal.style.display === "block" ? "none" : "block";
-// }
-// function submitEdit()
-// {
-//   const titleInput=document.getElementById('titleInput').value;
-//   const descriptionInput=document.getElementById('descriptionInput').value;
-//   const colorInput=document.getElementById('colorInput').value;
 
-//   console.log(titleInput);
-   
-//   document.getElementById('title3').textContent=titleInput;
-//   document.getElementById('description3').textContent=descriptionInput;
-//   document.getElementById('color3').textContent=colorInput;
-  // const modal1=document.getElementById("editModal1");
-  // const modal2=document.getElementById("editModal2");
-  // const modal3=document.getElementById("editModal3");
-  /*console.log(modal1);
-  modal1.style.display=modal1.style.display = "none"
-  modal2.style.display=modal2.style.display  = "none";
-  modal3.style.display=modal3.style.display = "none";*/
 
-// }
 function popup() {
 
 const popupContainer = document.createElement("div");
@@ -340,31 +223,39 @@ popupContainer.innerHTML = `
 `;
 document.body.appendChild(popupContainer);
 }
+function closePopup() {
+    const popupContainer = document.getElementById("popupContainer");
+    if(popupContainer) {
+        popupContainer.remove();
+    }
+}
 function createNote() {
 
 const popupContainer = document.getElementById('popupContainer');
-const titleText = document.getElementById('note-title').value;
+const noteTitle = document.getElementById('note-title').value;
 const noteText = document.getElementById('note-text').value;
-console.log(titleText);
-if (titleText.trim() !== '') {
-    const title = {
-    id: new Date().getTime(),
-    text: titleText
-    };
-  }
+const noteColor = document.getElementById('note-color').value;
+
+
+
+  
 if (noteText.trim() !== '') {
     const note = {
     id: new Date().getTime(),
-    text: noteText
+    title: noteTitle,
+    text: noteText,
+    color: noteColor
     };
 
     const existingNotes = JSON.parse(localStorage.getItem('notes')) || [];
-    existingNotes.push(title);
+    
     existingNotes.push(note);
 
     localStorage.setItem('notes', JSON.stringify(existingNotes));
+
     document.getElementById('note-title').value = '';
     document.getElementById('note-text').value = '';
+    document.getElementById('note-color').value = '';
 
     popupContainer.remove();
     displayNotes();
@@ -380,16 +271,94 @@ function displayNotes() {
     notes.forEach(note => {
         const listItem = document.createElement('li');
         listItem.innerHTML = `
-        <h1>${note.text}</h1>
+        <h3>${note.title}</h3>
         <span>${note.text}</span>
+        <span>${note.color}</span>
         <div id="noteBtns-container">
-            <button id="editBtn" onclick="editNote(${note.id})"><i class="fa-solid fa-pen"></i></button>
-            <button id="deleteBtn" onclick="deleteNote(${note.id})"><i class="fa-solid fa-trash"></i></button>
+            <button id="editBtn" onclick="editNote(${note.id})"><i class="fa-solid fa-pen"></i>Edit</button>
+            <button id="deleteBtn" onclick="deleteNote(${note.id})"><i class="fa-solid fa-trash"></i>Delete</button>
         </div>
         `;
         notesList.appendChild(listItem);
     });
 }
+function editNote(noteId) {
+    const notes = JSON.parse(localStorage.getItem('notes')) || [];
+    const noteToEdit = notes.find(note => note.id == noteId);
+    const noteTitle=noteToEdit ? noteToEdit.title : '';
+    const noteText = noteToEdit ? noteToEdit.text : '';
+    const noteColor = noteToEdit ? noteToEdit.color : '';
+    const editingPopup = document.createElement("div");
+    
+    editingPopup.innerHTML = `
+    <div id="editing-container" data-note-id="${noteId}">
+        <h1>Edit Note</h1>
+        <textarea id="note-title">${noteTitle}</textarea>
+        <textarea id="note-text">${noteText}</textarea>
+        <textarea id="note-text">${noteColor}</textarea>
+        <div id="btn-container">
+            <button id="submitBtn" onclick="updateNote()">Done</button>
+            <button id="closeBtn" onclick="closeEditPopup()">Cancel</button>
+        </div>
+    </div>
+    `;
+
+    document.body.appendChild(editingPopup);
+}
+
+function closeEditPopup() {
+    const editingPopup = document.getElementById("editing-container");
+
+    if(editingPopup) {
+        editingPopup.remove();
+    }
+}
+
+function updateNote() {
+    const noteTitle = document.getElementById('note-title').value.trim();
+    const noteText = document.getElementById('note-text').value.trim();
+    const noteColor = document.getElementById('note-color').value.trim();
+
+    const editingPopup = document.getElementById('editing-container');
+
+    if (noteText !== '') {
+        const noteId = editingPopup.getAttribute('data-note-id');
+        let notes = JSON.parse(localStorage.getItem('notes')) || [];
+
+        
+        const updatedNotes = notes.map(note => {
+            if (note.id == noteId) {
+                return { id: note.id, 
+                  title: noteTitle,
+                  text: noteText,
+                  color: noteColor
+                  };
+            }
+            return note;
+        });
+
+        
+        localStorage.setItem('notes', JSON.stringify(updatedNotes));
+
+        
+        editingPopup.remove();
+
+        
+        displayNotes();
+    }
+}
+
+
+
+function deleteNote(noteId) {
+    let notes = JSON.parse(localStorage.getItem('notes')) || [];
+    notes = notes.filter(note => note.id !== noteId);
+
+    localStorage.setItem('notes', JSON.stringify(notes));
+    displayNotes();
+}
+
+displayNotes();
 </script>
    
 </body>
