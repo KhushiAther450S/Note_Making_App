@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
 
 </head>
 <body>
 
 <div id="mySidenav" class="sidenav">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <a href="index.html">Home</a>
-  <a id=Addnote onclick=popup()>Create Note</a>
-  <a href="#">About</a>
-  <a href="#">Contact</a>
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="index.html">Home</a>
+    <a id=Addnote onclick=popup()>Create Note</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
 </div>
 
 
@@ -20,210 +20,234 @@
 <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; </span>
 
 <div id="list-container">
-  <ul id="notes-list"></ul>
+    <ul id="notes-list"></ul>
 </div>
 
 
-  
 
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
-function openNav() {
-  document.getElementById("mySidenav").style.width = "250px";
-}
-
-function closeNav() {
-  document.getElementById("mySidenav").style.width = "0";
-}
-
-
-function popup() {
-
-const popupContainer = document.createElement("div");
-
-popupContainer.innerHTML = `
-<div id="popupContainer">
-    <textarea id="note-title" placeholder="Enter your title..." oninput="validateTitle(this) "></textarea>
-    <textarea id="note-text" placeholder="Enter your note..." oninput="validateNoteText(this) "></textarea>
-    <textarea id="note-color" placeholder="Enter the color..." oninput="validateColor(this) "></textarea>
-    <div id="btn-container">
-        <button id="submitBtn" onclick="createNote()">Create Note</button>
-        <button id="closeBtn" onclick="closePopup()">Close</button>
-    </div>
-</div>
-`;
-document.body.appendChild(popupContainer);
-}
-function closePopup() {
-    const popupContainer = document.getElementById("popupContainer");
-    if(popupContainer) {
-        popupContainer.remove();
+    function openNav() {
+      document.getElementById("mySidenav").style.width = "250px";
     }
-}
 
-function validateTitle(input){
-  console.log(input.value);
-  if(input.value.length>20)
-  {
-    alert("Title should be of 20 characters or less");
-    input.value=input.value.slice(0,20);
-   
-  }
-}
-function validateNoteText(input){
-  if(input.value.length>50)
-  {
-    alert("Description should be of 50 characters or less");
-    input.value=input.value.slice(0,50);
-    
-    
-  }
-}
-function validateColor(input){
-  let color=input.value.trim();
-  const isValidColor=/^[a-zA-Z]*$/.test(color);
-  if(!isValidColor)
-      {
-        alert("Color should contain only english letters");
-        color=color.replace(/[^a-zA-Z]/g, '');
-        input.value=color;
-      }
-      if(color.length>10)
-      {
-        alert("Color should be maximum 10 characters long.");
-        input.value=color.slice(0,10);
-      }
-}
-function createNote() {
-
-const popupContainer = document.getElementById('popupContainer');
-const noteTitle = document.getElementById('note-title').value;
-const noteText = document.getElementById('note-text').value;
-const noteColor = document.getElementById('note-color').value;
+    function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+    }
 
 
 
-  
-if (noteText.trim() !== '') {
-    const note = {
-    id: new Date().getTime(),
-    title: noteTitle,
-    text: noteText,
-    color: noteColor
-    };
+    function popup() {
 
-    const existingNotes = JSON.parse(localStorage.getItem('notes')) || [];
-    
-    existingNotes.push(note);
+    const popupContainer = document.createElement("div");
 
-    localStorage.setItem('notes', JSON.stringify(existingNotes));
-
-    document.getElementById('note-title').value = '';
-    document.getElementById('note-text').value = '';
-    document.getElementById('note-color').value = '';
-
-    popupContainer.remove();
-    displayNotes();
-    
-}
-}
-function displayNotes() {
-    const notesList = document.getElementById('notes-list');
-    notesList.innerHTML = '';
-
-    const notes = JSON.parse(localStorage.getItem('notes')) || [];
-
-    notes.forEach(note => {
-        const listItem = document.createElement('li');
-        listItem.innerHTML = `
-        <h3>${note.title}</h3>
-        <span>${note.text}</span>
-        <span>${note.color}</span>
-        <div id="noteBtns-container">
-            <button id="editBtn" onclick="editNote(${note.id})"><i class="fa-solid fa-pen"></i>Edit</button>
-            <button id="deleteBtn" onclick="deleteNote(${note.id})"><i class="fa-solid fa-trash"></i>Delete</button>
-        </div>
-        `;
-        notesList.appendChild(listItem);
-    });
-}
-function editNote(noteId) {
-    const notes = JSON.parse(localStorage.getItem('notes')) || [];
-    const noteToEdit = notes.find(note => note.id == noteId);
-    const noteTitle=noteToEdit ? noteToEdit.title : '';
-    const noteText = noteToEdit ? noteToEdit.text : '';
-    const noteColor = noteToEdit ? noteToEdit.color : '';
-    const editingPopup = document.createElement("div");
-    
-    editingPopup.innerHTML = `
-    <div id="editing-container" data-note-id="${noteId}">
-        <h1>Edit Note</h1>
-        <textarea id="note-title">${noteTitle}</textarea>
-        <textarea id="note-text">${noteText}</textarea>
-        <textarea id="note-color">${noteColor}</textarea>
+    popupContainer.innerHTML = `
+    <div id="popupContainer">
+        <textarea id="note-title" placeholder="Enter your title..." oninput="validateTitle(this) "></textarea>
+        <textarea id="note-text" placeholder="Enter your note..." oninput="validateNoteText(this) "></textarea>
+        <textarea id="note-color" placeholder="Enter the color..." oninput="validateColor(this) "></textarea>
         <div id="btn-container">
-            <button id="submitBtn" onclick="updateNote()">Done</button>
-            <button id="closeBtn" onclick="closeEditPopup()">Cancel</button>
+            <button id="submitBtn" onclick="createNote()" >Create Note</button>
+            <button id="closeBtn" onclick="closePopup()">Close</button>
         </div>
     </div>
     `;
-
-    document.body.appendChild(editingPopup);
-}
-
-function closeEditPopup() {
-    const editingPopup = document.getElementById("editing-container");
-
-    if(editingPopup) {
-        editingPopup.remove();
+    document.body.appendChild(popupContainer);
     }
+    function closePopup() {
+        const popupContainer = document.getElementById("popupContainer");
+        if(popupContainer) {
+            popupContainer.remove();
+        }
+    }
+
+    function validateTitle(input){
+      console.log(input.value);
+      if(input.value.length>20)
+      {
+        alert("Title should be of 20 characters or less");
+        input.value=input.value.slice(0,20);
+
+      }
+    }
+    function validateNoteText(input){
+      if(input.value.length>50)
+      {
+        alert("Description should be of 50 characters or less");
+        input.value=input.value.slice(0,50);
+
+
+      }
+    }
+    function validateColor(input){
+      let color=input.value.trim();
+      const isValidColor=/^[a-zA-Z]*$/.test(color);
+      if(!isValidColor)
+          {
+            alert("Color should contain only english letters");
+            color=color.replace(/[^a-zA-Z]/g, '');
+            input.value=color;
+          }
+          if(color.length>10)
+          {
+            alert("Color should be maximum 10 characters long.");
+            input.value=color.slice(0,10);
+          }
+    }
+    function createNote() {
+
+    const popupContainer = document.getElementById('popupContainer');
+    const noteTitle = document.getElementById('note-title').value;
+    const noteText = document.getElementById('note-text').value;
+    const noteColor = document.getElementById('note-color').value;
+
+    const noteData={
+    title:noteTitle,
+    text:noteText,
+    color:noteColor
+    };
+    console.log("HII");
+    fetch('/api/notes',{
+    method:POST,
+    headers:{
+    'Content-Type':'application/json'
+    },
+    body: JSON.stringify(noteData)
+    })
+    .then(response=>{
+    if(response.ok){
+    console.log('Note created successfully');
+    closePopup();
+    alert('Note created successfully');
+    }
+    else{
+    console.error('Error creating Note');
+    alert('Error creating Note');
+    }
+})
+
+<!--    if (noteText.trim() !== '') {-->
+<!--        const note = {-->
+<!--        id: new Date().getTime(),-->
+<!--        title: noteTitle,-->
+<!--        text: noteText,-->
+<!--        color: noteColor-->
+<!--        };-->
+
+<!--        const existingNotes = JSON.parse(localStorage.getItem('notes')) || [];-->
+
+<!--        existingNotes.push(note);-->
+
+<!--        localStorage.setItem('notes', JSON.stringify(existingNotes));-->
+
+<!--        document.getElementById('note-title').value = '';-->
+<!--        document.getElementById('note-text').value = '';-->
+<!--        document.getElementById('note-color').value = '';-->
+
+<!--        popupContainer.remove();-->
+<!--        displayNotes();-->
+
+<!--    }-->
 }
+    function displayNotes() {
+        const notesList = document.getElementById('notes-list');
+        notesList.innerHTML = '';
 
-function updateNote() {
-    const noteTitle = document.getElementById('note-title').value.trim();
-    const noteText = document.getElementById('note-text').value.trim();
-    const noteColor = document.getElementById('note-color').value.trim();
+        const notes = JSON.parse(localStorage.getItem('notes')) || [];
 
-    const editingPopup = document.getElementById('editing-container');
-
-    if (noteText !== '') {
-        const noteId = editingPopup.getAttribute('data-note-id');
-        let notes = JSON.parse(localStorage.getItem('notes')) || [];
-
-        
-        const updatedNotes = notes.map(note => {
-            if (note.id == noteId) {
-                return { id: note.id, 
-                  title: noteTitle,
-                  text: noteText,
-                  color: noteColor
-                  };
-            }
-            return note;
+        notes.forEach(note => {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `
+            <h3>${note.title}</h3>
+            <span>${note.text}</span>
+            <span>${note.color}</span>
+            <div id="noteBtns-container">
+                <button id="editBtn" onclick="editNote(${note.id})"><i class="fa-solid fa-pen"></i>Edit</button>
+                <button id="deleteBtn" onclick="deleteNote(${note.id})"><i class="fa-solid fa-trash"></i>Delete</button>
+            </div>
+            `;
+            notesList.appendChild(listItem);
         });
+    }
+    function editNote(noteId) {
+        const notes = JSON.parse(localStorage.getItem('notes')) || [];
+        const noteToEdit = notes.find(note => note.id == noteId);
+        const noteTitle=noteToEdit ? noteToEdit.title : '';
+        const noteText = noteToEdit ? noteToEdit.text : '';
+        const noteColor = noteToEdit ? noteToEdit.color : '';
+        const editingPopup = document.createElement("div");
 
-        
-        localStorage.setItem('notes', JSON.stringify(updatedNotes));
+        editingPopup.innerHTML = `
+        <div id="editing-container" data-note-id="${noteId}">
+            <h1>Edit Note</h1>
+            <textarea id="note-title" oninput="validateTitle(this)">${noteTitle}</textarea>
+            <textarea id="note-text" oninput="validateNoteText(this)">${noteText}</textarea>
+            <textarea id="note-color" oninput="validateColor(this)">${noteColor}</textarea>
+            <div id="btn-container">
+                <button id="submitBtn" onclick="updateNote()">Done</button>
+                <button id="closeBtn" onclick="closeEditPopup()">Cancel</button>
+            </div>
+        </div>
+        `;
 
-        
-        editingPopup.remove();
+        document.body.appendChild(editingPopup);
+    }
 
-        
+    function closeEditPopup() {
+        const editingPopup = document.getElementById("editing-container");
+
+        if(editingPopup) {
+            editingPopup.remove();
+        }
+    }
+
+    function updateNote() {
+        const noteTitle = document.getElementById('note-title').value.trim();
+        const noteText = document.getElementById('note-text').value.trim();
+        const noteColor = document.getElementById('note-color').value.trim();
+
+        const editingPopup = document.getElementById('editing-container');
+
+        if (noteText !== '') {
+            const noteId = editingPopup.getAttribute('data-note-id');
+            let notes = JSON.parse(localStorage.getItem('notes')) || [];
+
+
+            const updatedNotes = notes.map(note => {
+                if (note.id == noteId) {
+                    return { id: note.id,
+                      title: noteTitle,
+                      text: noteText,
+                      color: noteColor
+                      };
+                }
+                return note;
+            });
+
+
+            localStorage.setItem('notes', JSON.stringify(updatedNotes));
+
+
+            editingPopup.remove();
+
+
+            displayNotes();
+        }
+    }
+
+
+
+    function deleteNote(noteId) {
+        let notes = JSON.parse(localStorage.getItem('notes')) || [];
+        notes = notes.filter(note => note.id !== noteId);
+
+        localStorage.setItem('notes', JSON.stringify(notes));
         displayNotes();
     }
-}
 
-
-
-function deleteNote(noteId) {
-    let notes = JSON.parse(localStorage.getItem('notes')) || [];
-    notes = notes.filter(note => note.id !== noteId);
-
-    localStorage.setItem('notes', JSON.stringify(notes));
     displayNotes();
-}
-
-displayNotes();
 </script>
-   
+
 </body>
-</html> 
+</html>
