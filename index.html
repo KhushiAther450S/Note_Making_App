@@ -251,3 +251,9 @@
 
 </body>
 </html>
+explain select d.test_case_name ,(count(case when test_status='completed' then 1 end)*100.0)/count(*) as completion_percentage
+from dvptestcase d 
+join
+ucp u on d.dvp_id = u.dvp_id 
+group by 
+d.test_case_name;
