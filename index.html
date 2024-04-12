@@ -257,3 +257,9 @@ join
 ucp u on d.dvp_id = u.dvp_id 
 group by 
 d.test_case_name;
+SELECT d.test_case_name,
+       (COUNT(CASE WHEN test_status = 'completed' THEN 1 END) * 100.0) / COUNT(*) AS completion_percentage
+FROM dvptestcase d 
+JOIN ucp u ON d.dvp_id = u.dvp_id 
+WHERE d.test_status IN ('completed', 'in progress', 'done') -- Only necessary if there are statuses you'd routinely exclude
+GROUP BY d.test_case_name;
